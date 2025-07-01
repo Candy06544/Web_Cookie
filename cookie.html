@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Cookie Example</title>
+</head>
+<body>
+  <h1>Cookie Demo</h1>
+  <button onclick="setCookie('username', 'Joyce', 7)">Set Cookie</button>
+  <button onclick="alert(getCookie('username'))">Get Cookie</button>
+  <button onclick="deleteCookie('username')">Delete Cookie</button>
+
+  <script>
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = `${name}=${value}; ${expires}; path=/`;
+      alert(`${name} cookie has been set!`);
+    }
+
+    // Function to get a cookie
+    function getCookie(name) {
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookiesArray = decodedCookie.split(';');
+      for (let cookie of cookiesArray) {
+        const [cookieName, cookieValue] = cookie.trim().split('=');
+        if (cookieName === name) {
+          return cookieValue;
+        }
+      }
+      return "Cookie not found!";
+    }
+
+    // Function to delete a cookie
+    function deleteCookie(name) {
+      setCookie(name, "", -1); // Setting a negative expiration date removes the cookie
+      alert(`${name} cookie has been deleted!`);
+    }
+  </script>
+</body>
+</html>
